@@ -1,0 +1,21 @@
+{
+  "collection": "sensor_payloads",
+  "document": {
+    "eventId": "uuid",
+    "trainId": "TRAIN-001",
+    "rawCameraFrameUri": "s3://bucket/frame.jpg",
+    "rawLidarScanUri": "s3://bucket/scan.pcd",
+    "gps": { "latitude": 17.385, "longitude": 78.4867 },
+    "imu": { "yaw": 0.02, "pitch": 0.01, "roll": 0.0 },
+    "detections": [
+      {
+        "class": "person",
+        "confidence": 0.94,
+        "bbox": [120, 88, 240, 330],
+        "distanceM": 72.5,
+        "trackPosition": "center"
+      }
+    ],
+    "createdAt": "2026-06-15T00:00:00Z"
+  }
+}

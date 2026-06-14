@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+.venv/
+venv/
+
+# Build outputs
+dist/
+build/
+target/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local environment
+.env
+.env.*
+!.env.example
+
+# Tool metadata
+.vercel/
+.idea/
+.vscode/
+
+# OS files
+Thumbs.db
+.DS_Store
