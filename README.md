@@ -14,6 +14,11 @@ Industrial-grade project scaffold for an AI-powered railway safety system using 
 
 - Figma dashboard mockup: https://www.figma.com/design/djhbfdvqNsDoG5vVZCfy5j
 
+## Hosted Links
+
+- GitHub repository: https://github.com/nohithreddy/railway-obstacle-detection
+- Vercel production dashboard: https://frontend-dashboard-pied.vercel.app
+
 ## Quick Start
 
 ### Backend
