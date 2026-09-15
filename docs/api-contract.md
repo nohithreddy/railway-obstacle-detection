@@ -47,3 +47,30 @@
   "notes": "Obstacle moving away from track"
 }
 ```
+
+## Control Portal (spring-control-service, port 8081)
+
+`POST /api/portal/alerts` - forward an event from the FastAPI backend to the control portal.
+
+```json
+{
+  "eventId": "uuid",
+  "trainId": "TRAIN-001",
+  "objectType": "person",
+  "riskLevel": "medium",
+  "latitude": 17.385,
+  "longitude": 78.4867,
+  "distanceM": 72.5,
+  "action": "REQUEST_DRIVER_DECISION"
+}
+```
+
+`GET /api/portal/alerts?trainId=TRAIN-001` - list alerts, newest first, optionally filtered by train.
+
+`GET /api/portal/alerts/{eventId}` - fetch one alert.
+
+`POST /api/portal/emergency-response/{eventId}` - activate the emergency response protocol for an event.
+
+`GET /api/portal/trains/{trainId}/status` - latest alert, alert count, and whether emergency response is active for a train.
+
+`GET /api/portal/audit-log` - recent portal actions (alert received, emergency activated), newest first.
