@@ -1,5 +1,15 @@
 # Railway Portal API Contract
 
+## Auth
+
+`POST /api/v1/auth/login?operator_id=driver-17&password=changeme`
+
+```json
+{ "access_token": "<jwt>", "token_type": "bearer", "role": "driver" }
+```
+
+Send `Authorization: Bearer <jwt>` on `/api/v1/driver-response` and `/api/v1/brake/release`. `/api/v1/detections` and `/api/v1/events` stay open — the edge device posting telemetry isn't a logged-in human. Demo users: `driver-17` and `operator-1`, both password `changeme` — replace with a real user store before this leaves a bench network.
+
 ## Ingest Detection
 
 `POST /api/v1/detections`
