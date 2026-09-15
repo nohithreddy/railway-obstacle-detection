@@ -4,17 +4,28 @@ Turns the simulator into a tabletop demo you can point a camera at: a small moto
 
 ## Bill of Materials
 
-| Item | Purpose | Approx. price (₹) |
-|---|---|---|
-| Raspberry Pi 4 (4GB) or Pi 5, + power supply, SD card (32GB) | Runs `backend-fastapi` + `edge/capture_loop.py` at the edge | 6,000–8,500 |
-| Raspberry Pi Camera Module 3 (or USB webcam) | Feeds YOLOv8 detection | 1,500–2,500 |
-| HC-SR04 ultrasonic sensor | Distance reading (`read_distance_m()`) | 100–150 |
-| 2-channel relay module | Cuts motor power on `AUTO_BRAKE` | 150–250 |
-| Small DC gear-motor cart or toy train (9–12V) + track/guide rail | Stands in for "the train" | 800–2,000 |
-| Breadboard + jumper wires + resistors | Wiring the sensor and relay to GPIO | 300–500 |
-| Toy figures / blocks of varying size | Obstacles for small/medium/large risk tiers | 200–500 |
-| Laptop or second Pi | Runs `spring-control-service` as the "control room" | already owned |
-| Monitor/tablet | Runs `frontend-dashboard` as the driver display | already owned |
+Sourced from Indian robotics distributors (Robu.in is an official Raspberry Pi reseller; Robokits and Probots are standard hobbyist suppliers). Prices found while writing this plan — check current pricing before ordering, they drift.
+
+| Item | Purpose | Price (₹) | Where |
+|---|---|---|---|
+| Raspberry Pi 5, 4GB | Runs `backend-fastapi` + `edge/capture_loop.py` at the edge | ~6,000 | [Robu.in](https://robu.in/product/raspberry-pi-5-model-4gb/) |
+| Official 27W USB-C PD power supply | Pi 5 needs this exact spec, not a phone charger | ~900–1,200 | [Robu.in](https://robu.in/product/official-27w-usb-c-pd-power-supply-for-raspberry-pi-5-black/) |
+| microSD card, 32GB, Class 10 | OS + model weights | ~500–800 | [Amazon.in](https://www.amazon.in/SanDisk-Ultra-microSD-UHS-I-120MB/dp/B08L5HMJVW) |
+| Raspberry Pi Camera Module 3 | Feeds YOLOv8 detection | ~3,300–3,900 | [Robu.in](https://robu.in/product/raspberry-pi-camera-module-3/) |
+| HC-SR04 ultrasonic sensor | Distance reading (`read_distance_m()`) | ~55–105 | [Robokits](https://robokits.co.in/sensors/ultrasonic-sensor/hc-sr04-ultrasonic-sensor-distance-measuring-module) / [Robu.in](https://robu.in/product/hc-sr04-ultrasonic-range-finder/) |
+| 2-channel 5V relay module | Cuts motor power on `AUTO_BRAKE` | ~90–150 | [Robu.in](https://robu.in/product/5v-2-channel-relay-module/) |
+| 2WD acrylic chassis kit — 2× TT gear motor, wheels, caster, 4×AA holder | Stands in for "the train" | ~380–600 | [Probots](https://probots.co.in/2wd-clear-acrylic-smart-robot-chassis-car-kit.html) |
+| Breadboard + 140pcs jumper wire kit | Wiring the sensor and relay to GPIO | ~110–310 | [Robu.in](https://robu.in/product/mb102-830-points-solderless-prototype-breadboard-power-supply-module-140-jumper-wires-arduino-diy-starter-kit/) |
+| Assorted resistor kit | Only 2 values actually used — 1kΩ + 2kΩ for the ECHO voltage divider — but a kit is cheaper than a specialty order and covers future tweaks | ~440 | [Robu.in](https://robu.in/product/assorted-resistor-kit-250-pcs/) |
+| Toy figures / blocks of varying size | Obstacles for small/medium/large risk tiers | ~200–500 | local stationery/toy shop |
+| Laptop or second Pi | Runs `spring-control-service` as the "control room" | already owned | — |
+| Monitor/tablet | Runs `frontend-dashboard` as the driver display | already owned | — |
+
+**Running total: ~₹11,900–14,300** — under the ₹15,000–25,000 tier target, leaving headroom for shipping and a spare part or two (a second HC-SR04 and a few extra jumper wires are worth having; both fail more often than anything else on this list).
+
+Cost levers if you want to go lower or higher:
+- Swap the Camera Module 3 (~₹3,600) for a ~₹500–800 USB webcam — cuts the single biggest line item, at the cost of a slightly fiddlier mount and a USB port instead of the Pi's dedicated CSI connector.
+- A Raspberry Pi 4 4GB instead of the 5 saves roughly ₹1,500–2,000 but runs YOLOv8n inference meaningfully slower — fine for the test protocol below, worth knowing before you commit to real-time thresholds later.
 
 Everything above already has a home in the codebase — this tier deliberately swaps in the cheapest sensor (ultrasonic, one distance value) that still exercises the full pipeline in [decision_engine.py](../backend-fastapi/app/decision_engine.py), rather than a full 2D LiDAR scan.
 
