@@ -6,7 +6,7 @@ Industrial-grade project scaffold for an AI-powered railway safety system using 
 
 - `backend-fastapi/` - Python FastAPI service for detections, decision engine, braking, notifications, WebSocket telemetry, and simulated sensor ingestion.
 - `frontend-dashboard/` - React + Three.js railway control portal with live obstacle visualization.
-- `spring-control-service/` - Java Spring Boot service skeleton for enterprise railway portal integration.
+- `spring-control-service/` - Java Spring Boot service for the railway control portal: receives alerts from the FastAPI backend, tracks per-train status, activates emergency response, and keeps an audit log.
 - `database/` - PostgreSQL schema and MongoDB event shape.
 - `docs/` - Architecture diagrams, UML/sequence/use-case diagrams, deployment guide, testing plan, B.Tech report, and IEEE paper draft.
 
