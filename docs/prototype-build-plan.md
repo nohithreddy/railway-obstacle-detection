@@ -59,14 +59,25 @@ The app was already architected for this; nothing in the decision loop changes, 
 3. **Real brake.** [braking.py](../backend-fastapi/app/braking.py) now drives a real GPIO pin when `BRAKE_RELAY_GPIO_PIN` is set; unset (e.g. on your dev laptop), it behaves exactly as before — no environment-specific code path risk to the existing tests.
 4. **Dashboard + portal.** `frontend-dashboard` and `spring-control-service` run unchanged, pointed at the Pi's IP address instead of `localhost`.
 
-On-device setup (the Pi only — do **not** add these to `requirements.txt`, they don't install off-Pi):
+On-device setup (the Pi only):
 
 ```bash
-pip install RPi.GPIO
-cd backend-fastapi && pip install -r requirements.txt
+cd backend-fastapi
+bash edge/setup_pi.sh   # venv, requirements + RPi.GPIO, .env, pre-caches YOLO weights
+# edit .env: set BRAKE_RELAY_GPIO_PIN=17 and anything else that needs to change
+source .venv/bin/activate
 uvicorn app.main:app --host 0.0.0.0 --port 8000 &
-BRAKE_RELAY_GPIO_PIN=17 python edge/capture_loop.py
+python edge/capture_loop.py
 ```
+
+For anything past a one-off bench test, install the two systemd units in [edge/systemd/](../backend-fastapi/edge/systemd/) instead of running both by hand — they restart on crash and start on boot, so the rig comes back up after a power cycle without an SSH session:
+
+```bash
+sudo cp edge/systemd/*.service /etc/systemd/system/
+sudo systemctl enable --now railway-backend railway-edge-capture
+```
+
+(Edit the `User=` and path fields in those two files first if your device user or clone path isn't `pi` / `/home/pi/railway-obstacle-detection`.)
 
 ## Test protocol
 

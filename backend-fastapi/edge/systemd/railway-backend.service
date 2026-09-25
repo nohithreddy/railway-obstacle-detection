@@ -1,0 +1,16 @@
+[Unit]
+Description=Railway obstacle detection backend (FastAPI)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/railway-obstacle-detection/backend-fastapi
+EnvironmentFile=/home/pi/railway-obstacle-detection/backend-fastapi/.env
+ExecStart=/home/pi/railway-obstacle-detection/backend-fastapi/.venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

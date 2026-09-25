@@ -17,7 +17,10 @@ from datetime import datetime
 
 import cv2
 import requests
+from dotenv import load_dotenv
 from ultralytics import YOLO
+
+load_dotenv()  # reads backend-fastapi/.env if present; harmless no-op otherwise
 
 BACKEND_URL = os.environ.get("BACKEND_URL", "http://localhost:8000/api/v1/detections")
 TRAIN_ID = os.environ.get("TRAIN_ID", "TRAIN-001")

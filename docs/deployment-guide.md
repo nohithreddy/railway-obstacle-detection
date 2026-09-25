@@ -4,11 +4,12 @@
 
 1. Install Ubuntu 22.04 (or Raspberry Pi OS) on Jetson Orin or Raspberry Pi.
 2. Connect LiDAR/ultrasonic, camera, GPS, IMU, and modem.
-3. Install Python, OpenCV, Ultralytics YOLO, and MQTT client libraries from `backend-fastapi/requirements.txt`. On the device only, also `pip install RPi.GPIO` (not in requirements.txt — it doesn't install off-device).
+3. On a Raspberry Pi, run `bash backend-fastapi/edge/setup_pi.sh` — creates the venv, installs `requirements.txt` plus the device-only `edge/requirements-edge.txt` (`RPi.GPIO`), writes `.env` from `.env.example`, and pre-caches the YOLO weights so the first real run doesn't need internet.
 4. Export trained YOLOv8 weights to ONNX or TensorRT for faster inference.
 5. Configure the edge process to publish detections to MQTT and the FastAPI REST endpoint.
+6. For anything past a bench test, install the systemd units in `backend-fastapi/edge/systemd/` so the backend and capture loop restart on crash and start on boot.
 
-For a starter-tier physical build (Raspberry Pi + camera + HC-SR04 + relay), see [backend-fastapi/edge/capture_loop.py](../backend-fastapi/edge/capture_loop.py) and the full bill of materials and wiring in [prototype-build-plan.md](prototype-build-plan.md).
+For a starter-tier physical build (Raspberry Pi + camera + HC-SR04 + relay), see [backend-fastapi/edge/capture_loop.py](../backend-fastapi/edge/capture_loop.py) and the full bill of materials, wiring, and systemd setup in [prototype-build-plan.md](prototype-build-plan.md).
 
 ## Backend
 

@@ -1,0 +1,16 @@
+[Unit]
+Description=Railway obstacle detection edge capture loop (camera + ultrasonic)
+After=railway-backend.service
+Requires=railway-backend.service
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/railway-obstacle-detection/backend-fastapi
+EnvironmentFile=/home/pi/railway-obstacle-detection/backend-fastapi/.env
+ExecStart=/home/pi/railway-obstacle-detection/backend-fastapi/.venv/bin/python edge/capture_loop.py
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

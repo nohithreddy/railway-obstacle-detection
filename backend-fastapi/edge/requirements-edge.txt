@@ -1,0 +1,3 @@
+# Device-only. Install alongside backend-fastapi/requirements.txt on the Pi —
+# RPi.GPIO doesn't build off a Raspberry Pi, so it stays out of requirements.txt.
+RPi.GPIO==0.7.1
